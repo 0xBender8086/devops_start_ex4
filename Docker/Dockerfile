@@ -1,11 +1,12 @@
 FROM ubuntu:18.04
 
-ADD * /opt/webapp/
+WORKDIR /opt/webapp/
+COPY Docker/requirements.txt /tmp/
 EXPOSE 5000
 
 RUN apt update \
 && RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q python-all python-pip \
-&& mv /opt/webapp/Docker/requirements.txt /tmp/ \
+#&& mv /opt/webapp/Docker/requirements.txt /tmp/ \
 && pip install -qr /tmp/requirements.txt \
 && apt remove -y python-pip \
 && rm -rf /var/lib/apt/lists/* \
