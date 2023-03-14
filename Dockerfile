@@ -1,12 +1,14 @@
-FROM python:3.8
+FROM ubuntu:18.04
 
 WORKDIR /opt/webapp/
 
-COPY requirements.txt /tmp/
-ADD app.py WORKDIR
-RUN pip3 install -r /tmp/requirements.txt
+COPY requirements.txt /tmp/requirements.txt
 
-COPY . .
+RUN apt update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q python-all python-pip
+RUN pip install -qr /tmp/requirements.txt
+
+COPY . WORKDIR
 EXPOSE 5000
 
-CMD ["python", "./app.py"]
+CMD ["python", "WORKDIR/app.py"]
